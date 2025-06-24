@@ -1,0 +1,40 @@
+﻿{
+  "ReverseProxy": {
+    "Routes": {
+      "apiservice": {
+        "ClusterId": "apiservice",
+        "Match": {
+          "Path": "/apiservice/{**catch-all}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/apiservice" }
+        ]
+      },
+      "frontend": {
+        "ClusterId": "frontend",
+        "Match": {
+          "Path": "/frontend/{**catch-all}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/frontend" }
+        ]
+      }
+    },
+    "Clusters": {
+      "apiservice": {
+        "Destinations": {
+          "apiservice/d1": {
+            "Address": "http://apiservice/"
+          }
+        }
+      },
+      "frontend": {
+        "Destinations": {
+          "frontend/d1": {
+            "Address": "http://webfrontend/"
+          }
+        }
+      }
+    }
+  }
+}
